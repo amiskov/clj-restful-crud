@@ -1,4 +1,4 @@
-(ns resultful-crud.restful
+(ns restful-crud.restful
   (:require [toucan.db :as db]
             [schema.core :as s]
             [compojure.api.sweet :refer [POST GET PUT DELETE routes]]

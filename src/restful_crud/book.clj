@@ -1,8 +1,8 @@
-(ns resultful-crud.book
+(ns restful-crud.book
   (:require [schema.core :as s]
-            [resultful-crud.string-util :as str]
-            [resultful-crud.models.book :refer [Book]]
-            [resultful-crud.restful :as restful]
+            [restful-crud.string-util :as str]
+            [restful-crud.models.book :refer [Book]]
+            [restful-crud.restful :as restful]
             [toucan.db :as db]
             [ring.util.http-response :refer [ok not-found created]]
             [compojure.api.sweet :refer [GET POST PUT DELETE]]))
