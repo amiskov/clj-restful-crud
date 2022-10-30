@@ -3,7 +3,9 @@
             [toucan.models :as models]
             [ring.adapter.jetty :refer [run-jetty]]
             [compojure.api.sweet :refer [api routes]]
-            [resultful-crud.user :refer [user-routes]]))
+            [resultful-crud.book :refer [book-routes book-entity-route]]
+            [resultful-crud.user :refer [user-routes user-entity-route]])
+  (:gen-class))
 
 (def db-spec
   {:dbtype   "postgres"
@@ -17,7 +19,8 @@
    :options {:ui   {:validatorUrl nil}
              :data {:info {:version "1.0.0", :title "Restful CRUD API"}}}})
 
-(def app (api {:swagger swagger-config} (apply routes user-routes)))
+(def app (api {:swagger swagger-config}
+              (apply routes book-entity-route user-entity-route)))
 
 (defn -main
   [& args]

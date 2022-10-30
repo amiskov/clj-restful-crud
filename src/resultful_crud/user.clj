@@ -2,6 +2,7 @@
   (:require [schema.core :as s]
             [resultful-crud.string-util :as str]
             [resultful-crud.models.user :refer [User]]
+            [resultful-crud.restful :as restful]
             [buddy.hashers :as hashers]
             [clojure.set :refer [rename-keys]]
             [toucan.db :as db]
@@ -72,3 +73,10 @@
    (DELETE "/users/:id" []
      :path-params [id :- s/Int]
      (delete-user-handler id))])
+
+(def user-entity-route
+  (restful/resource {:model      User
+                     :name       "users"
+                     :req-schema UserRequestSchema
+                     :leave      #(dissoc % :password_hash)
+                     :enter      canonicalize-user-req}))
