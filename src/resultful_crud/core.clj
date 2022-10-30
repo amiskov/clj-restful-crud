@@ -1,0 +1,34 @@
+(ns resultful-crud.core
+  (:require [toucan.db :as db]
+            [toucan.models :as models]
+            [ring.adapter.jetty :refer [run-jetty]]
+            [compojure.api.sweet :refer [api routes]]
+            [resultful-crud.user :refer [user-routes]]))
+
+(def db-spec
+  {:dbtype   "postgres"
+   :dbname   "restful-crud"
+   :user     "andreymiskov"
+   :password ""})
+
+(def swagger-config
+  {:ui      "/swagger"
+   :spec    "/swagger.json"
+   :options {:ui   {:validatorUrl nil}
+             :data {:info {:version "1.0.0", :title "Restful CRUD API"}}}})
+
+(def app (api {:swagger swagger-config} (apply routes user-routes)))
+
+(defn -main
+  [& args]
+  (db/set-default-db-connection! db-spec)
+  (models/set-root-namespace! 'resultful-crud.models)
+  (run-jetty app {:port 3000}))
+
+(comment
+
+  (db/set-default-db-connection! db-spec)
+  (models/set-root-namespace! 'resultful-crud.models)
+  (run-jetty app {:port 3000})
+
+  #_())
